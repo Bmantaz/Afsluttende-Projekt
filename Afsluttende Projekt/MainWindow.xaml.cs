@@ -18,11 +18,30 @@ namespace Afsluttende_Projekt
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
+
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        private void btnMedarbejderLogin_Click(object sender, RoutedEventArgs e)
+        {
+            // Skjul Mainwindow
+            this.Hide();
+
+            // Opret og vis LoginWindow
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();                       
+        }
+
+
+
     }
+
 }
+
+
+
