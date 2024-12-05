@@ -11,17 +11,21 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
+using System.Data.OleDb;
 
 namespace Afsluttende_Projekt
 {
-    /// <summary>
-    /// Interaction logic for LoginWindow.xaml
-    /// </summary>
     public partial class LoginWindow : Window
     {
+        private List<Bruger> brugere;
+
         public LoginWindow()
         {
             InitializeComponent();
+            // Hent brugere fra Excel-filen
+            DataAccess dataAccess = new DataAccess();
+            brugere = dataAccess.HentBrugere();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -29,17 +33,21 @@ namespace Afsluttende_Projekt
             string brugernavn = txtBrugernavn.Text;
             string adgangskode = txtAdgangskode.Password;
 
-            // Valider brugeren (metode implementeres senere)
-            bool erGyldig = ValiderBruger(brugernavn, adgangskode);
+            // Valider brugeren
+            Bruger gyldigBruger = ValiderBruger(brugernavn, adgangskode);
 
-            if (erGyldig)
+            if (gyldigBruger != null)
             {
                 MessageBox.Show("Login succesfuldt!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
-                // Åbn hovedmenuen (skal oprettes senere)
-                //PLACEHOLDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //MainMenuWindow mainMenu = new MainMenuWindow();
-                //mainMenu.Show();
-                //this.Close();
+                // Åbn hovedmenuen og overfør brugeroplysninger
+                MainMenuWindow mainMenu = new MainMenuWindow(gyldigBruger);
+                mainMenu.Show();
+
+                // Opdater applikationens MainWindow
+                Application.Current.MainWindow = mainMenu;
+
+                // Luk LoginWindow
+                this.Close();
             }
             else
             {
@@ -47,10 +55,17 @@ namespace Afsluttende_Projekt
             }
         }
 
-        private bool ValiderBruger(string brugernavn, string adgangskode)
+        private Bruger ValiderBruger(string brugernavn, string adgangskode)
         {
-            // Midlertidig returnering - implementer faktisk validering senere
-            return false;
+            // Søg efter brugeren i listen
+            foreach (Bruger bruger in brugere)
+            {
+                if (bruger.Brugernavn == brugernavn && bruger.Adgangskode == adgangskode)
+                {
+                    return bruger;
+                }
+            }
+            return null;
         }
     }
 }
