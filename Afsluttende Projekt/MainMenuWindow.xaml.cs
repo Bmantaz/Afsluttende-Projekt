@@ -22,8 +22,19 @@ namespace Afsluttende_Projekt
         {
             InitializeComponent();
             aktueltBruger = bruger;
-            // Sæt velkomstbeskeden
             txtVelkommen.Text = $"Velkommen, {bruger.Brugernavn} (ID: {bruger.MedarbejderID})";
+        }
+
+        private void btnCEOAccess_Click(object sender, RoutedEventArgs e)
+        {
+            CEOLoginWindow ceoLogin = new CEOLoginWindow();
+            ceoLogin.ShowDialog();
+
+            if (ceoLogin.AccessGranted)
+            {
+                txtCEORestricted.Visibility = Visibility.Collapsed;
+                spCEOData.Visibility = Visibility.Visible;
+            }
         }
     }
 }

@@ -19,19 +19,27 @@ namespace Afsluttende_Projekt
     public partial class LoginWindow : Window
     {
         private List<Bruger> brugere;
+        private int loginAttempts = 0;
+        private const int MaxLoginAttempts = 3;
 
         public LoginWindow()
         {
             InitializeComponent();
-            // Hent brugere fra Excel-filen
             DataAccess dataAccess = new DataAccess();
             brugere = dataAccess.HentBrugere();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            string brugernavn = txtBrugernavn.Text;
-            string adgangskode = txtAdgangskode.Password;
+            string brugernavn = txtBrugernavn.Text.Trim();
+            string adgangskode = txtAdgangskode.Password.Trim();
+
+            // Tjek om felterne er udfyldt
+            if (string.IsNullOrEmpty(brugernavn) || string.IsNullOrEmpty(adgangskode))
+            {
+                MessageBox.Show("Angiv både brugernavn og adgangskode.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
 
             // Valider brugeren
             Bruger gyldigBruger = ValiderBruger(brugernavn, adgangskode);
@@ -39,25 +47,33 @@ namespace Afsluttende_Projekt
             if (gyldigBruger != null)
             {
                 MessageBox.Show("Login succesfuldt!", "Succes", MessageBoxButton.OK, MessageBoxImage.Information);
-                // Åbn hovedmenuen og overfør brugeroplysninger
+
                 MainMenuWindow mainMenu = new MainMenuWindow(gyldigBruger);
                 mainMenu.Show();
 
-                // Opdater applikationens MainWindow
                 Application.Current.MainWindow = mainMenu;
-
-                // Luk LoginWindow
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Forkert brugernavn eller adgangskode.", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                loginAttempts++;
+                if (loginAttempts >= MaxLoginAttempts)
+                {
+                    MessageBox.Show($"For mange mislykkede loginforsøg.\nDu har brugt alle {MaxLoginAttempts} forsøg.\nKontakt en administrator.",
+                                    "Adgang nægtet", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                }
+                else
+                {
+                    int forsøgTilbage = MaxLoginAttempts - loginAttempts;
+                    MessageBox.Show($"Forkert brugernavn eller adgangskode.\nDu har i alt {MaxLoginAttempts} forsøg.\nDu har nu {forsøgTilbage} forsøg tilbage.",
+                                    "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
         private Bruger ValiderBruger(string brugernavn, string adgangskode)
         {
-            // Søg efter brugeren i listen
             foreach (Bruger bruger in brugere)
             {
                 if (bruger.Brugernavn == brugernavn && bruger.Adgangskode == adgangskode)

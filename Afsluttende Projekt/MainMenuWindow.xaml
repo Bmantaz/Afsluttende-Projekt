@@ -9,17 +9,12 @@
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Til velkomsthilsen -->
             <RowDefinition Height="*"/>
-            <!-- Til indholdet -->
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <!-- Venstre kolonne -->
             <ColumnDefinition Width="1*"/>
-            <!-- Midterste kolonne -->
             <ColumnDefinition Width="1*"/>
-            <!-- Højre kolonne -->
         </Grid.ColumnDefinitions>
 
         <!-- Velkomstbesked øverst -->
@@ -33,7 +28,6 @@
         <!-- Venstre kolonne -->
         <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="10">
-                <!-- Venstre kolonne-indhold -->
                 <TextBlock Text="Profilbillede" FontSize="18" FontWeight="Bold"/>
                 <Image Source="Assets/Profilbillede.png" Height="150" Width="150" Margin="0,10,0,0"/>
             </StackPanel>
@@ -47,11 +41,24 @@
             </StackPanel>
         </Border>
 
-        <!-- Højre kolonne -->
+        <!-- Højre kolonne (CEO-sektion) -->
         <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1" Margin="5">
             <StackPanel Margin="10">
                 <TextBlock Text="CEO" FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
-                <TextBlock Text="Adgangskode påkrævet for at se denne sektion."/>
+
+                <!-- Knap til at åbne adgangslogin -->
+                <Button x:Name="btnCEOAccess" Content="Vis CEO-sektion" Width="120" Height="30" Margin="0,0,0,10"
+                        Click="btnCEOAccess_Click"/>
+
+                <!-- Tekst, hvis ingen adgang -->
+                <TextBlock x:Name="txtCEORestricted" Text="Adgangskode påkrævet for at se denne sektion." Visibility="Visible"/>
+
+                <!-- CEO data, gemt indtil adgang er givet -->
+                <StackPanel x:Name="spCEOData" Visibility="Collapsed" Margin="0,10,0,0">
+                    <TextBlock Text="KPI: 1234" FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="Aktivitetslog: Seneste login kl. 9:00." FontSize="16" Margin="0,0,0,5"/>
+                    <TextBlock Text="(Cookie Clicker spillet kan indsættes her)" FontSize="14" FontStyle="Italic"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
