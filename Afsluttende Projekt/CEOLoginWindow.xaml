@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Afsluttende_Projekt"
         mc:Ignorable="d"
-        Title="CEOLoginWindow" Height="450" Width="800">
+        Title="CEOLoginWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Background>
         <!-- PLACE HOLDER SKIFT DENNE -->
         <ImageBrush ImageSource="Assets/Baggrund.jpg"/>

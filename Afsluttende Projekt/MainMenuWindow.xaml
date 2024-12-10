@@ -1,7 +1,8 @@
 ﻿<Window x:Class="Afsluttende_Projekt.MainMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Hovedmenu" Height="450" Width="800">
+        Title="Hovedmenu" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     <Window.Background>
         <!-- PLACE HOLDER SKIFT DENNE -->
         <ImageBrush ImageSource="Assets/Baggrund.jpg"/>
