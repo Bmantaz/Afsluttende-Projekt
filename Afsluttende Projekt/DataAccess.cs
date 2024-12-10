@@ -15,7 +15,10 @@ namespace Afsluttende_Projekt
             string projectDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(baseDir).FullName).FullName).FullName; // Går flere niveauer op for at nå projektmappen
             excelFilePath = Path.Combine(projectDir, "Assets/Brugerdata.xlsx");                               // Sammensætter stien til Excel-filen i Assets-mappen
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;                                          // Sætter licenskonteksten for EPPlus til ikke-kommerciel brug
+   
         }
+      
+
 
         public List<Bruger> HentBrugere()
         {

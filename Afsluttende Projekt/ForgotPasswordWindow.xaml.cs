@@ -101,6 +101,10 @@ namespace Afsluttende_Projekt
             bool harSmå = Regex.IsMatch(kode, @"[a-z]");
 
             return harTal && harSpecial && harStore && harSmå;
+      
         }
+
+
+
     }
 }

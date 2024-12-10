@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Afsluttende_Projekt"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        >
     <Window.Background>
         <!-- PLACE HOLDER SKIFT DENNE -->
         <ImageBrush ImageSource="Assets/Baggrund.jpg"/>

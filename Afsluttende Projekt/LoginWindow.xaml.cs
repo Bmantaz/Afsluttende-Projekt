@@ -85,5 +85,9 @@ namespace Afsluttende_Projekt
             ForgotPasswordWindow fpw = new ForgotPasswordWindow();
             fpw.ShowDialog(); // Viser vinduet som en dialog, der blokerer indtil det lukkes
         }
+
+
+
+        }
+
     }
-}

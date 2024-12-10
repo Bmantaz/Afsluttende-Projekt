@@ -1,6 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
-
+using System.Windows.Media.Imaging;
 
 namespace Afsluttende_Projekt
 {
@@ -11,8 +12,21 @@ namespace Afsluttende_Projekt
         public MainMenuWindow(Bruger bruger)
         {
             InitializeComponent();
+
             aktueltBruger = bruger;
             txtVelkommen.Text = $"Velkommen, {bruger.Brugernavn} (ID: {bruger.MedarbejderID})";
+
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string projectDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(baseDir).FullName).FullName).FullName;
+
+            string imagePath = Path.Combine(projectDir, "Assets", "Profilbilleder", bruger.MedarbejderID + ".png");
+
+            if (!File.Exists(imagePath))
+            {
+                imagePath = Path.Combine(projectDir, "Assets", "Profilbilleder", "default.png");
+            }
+
+            profilImage.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
         }
 
         private void btnCEOAccess_Click(object sender, RoutedEventArgs e)
@@ -26,8 +40,31 @@ namespace Afsluttende_Projekt
                 spCEOData.Visibility = Visibility.Visible;
             }
         }
- 
 
+        private void Banko_Click(object sender, RoutedEventArgs e)
+        {
+            BankoWindow bw = new BankoWindow();
+            bw.ShowDialog();
+        }
 
+        private void MainMenuWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void LogUd_Click(object sender, RoutedEventArgs e)
+        {
+            // Skjul MainMenuWindow
+            this.Hide();
+
+            // Hent MainWindow, som antages at være applicationens MainWindow
+            MainWindow mw = Application.Current.MainWindow as MainWindow;
+
+            if (mw != null)
+            {
+                // Viser MainWindow igen
+                mw.Show();
+            }
+        }
     }
 }
