@@ -9,7 +9,6 @@
         WindowStartupLocation="CenterScreen"
         >
     <Window.Background>
-        <!-- PLACE HOLDER SKIFT DENNE -->
         <ImageBrush ImageSource="Assets/Baggrund.jpg"/>
     </Window.Background>
     <Grid Margin="10">

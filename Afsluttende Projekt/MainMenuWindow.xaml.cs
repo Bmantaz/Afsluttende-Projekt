@@ -54,17 +54,12 @@ namespace Afsluttende_Projekt
 
         private void LogUd_Click(object sender, RoutedEventArgs e)
         {
-            // Skjul MainMenuWindow
+            // Luk dette vindue
             this.Hide();
 
-            // Hent MainWindow, som antages at være applicationens MainWindow
-            MainWindow mw = Application.Current.MainWindow as MainWindow;
-
-            if (mw != null)
-            {
-                // Viser MainWindow igen
-                mw.Show();
-            }
+            // Opret en ny instans af MainWindow
+            MainWindow newMainWindow = new MainWindow();
+            newMainWindow.Show();
         }
     }
 }

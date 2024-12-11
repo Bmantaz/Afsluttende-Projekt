@@ -4,9 +4,7 @@
         Title="Banko" 
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
-    <Window.Background>
-        <ImageBrush ImageSource="Assets/Baggrund.jpg"/>
-    </Window.Background>
+
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
