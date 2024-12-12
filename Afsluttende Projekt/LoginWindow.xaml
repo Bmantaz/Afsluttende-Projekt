@@ -47,4 +47,4 @@
                 HorizontalAlignment="Center" Margin="0,10,0,0"
                 Click="btnForgotPassword_Click"/>
     </Grid>
-</Window>
+</Window> 

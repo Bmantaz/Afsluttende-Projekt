@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
-using System.Windows.Media.Imaging;
 
 namespace Afsluttende_Projekt
 {
@@ -12,54 +10,83 @@ namespace Afsluttende_Projekt
         public MainMenuWindow(Bruger bruger)
         {
             InitializeComponent();
-
             aktueltBruger = bruger;
+
+            // Sæt velkomstbesked
             txtVelkommen.Text = $"Velkommen, {bruger.Brugernavn} (ID: {bruger.MedarbejderID})";
-
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-            string projectDir = Directory.GetParent(Directory.GetParent(Directory.GetParent(baseDir).FullName).FullName).FullName;
-
-            string imagePath = Path.Combine(projectDir, "Assets", "Profilbilleder", bruger.MedarbejderID + ".png");
-
-            if (!File.Exists(imagePath))
-            {
-                imagePath = Path.Combine(projectDir, "Assets", "Profilbilleder", "default.png");
-            }
-
-            profilImage.Source = new BitmapImage(new Uri(imagePath, UriKind.Absolute));
         }
 
         private void btnCEOAccess_Click(object sender, RoutedEventArgs e)
         {
+            // Åbn CEO-login vinduet
             CEOLoginWindow ceoLogin = new CEOLoginWindow();
             ceoLogin.ShowDialog();
 
+            // Tjek om adgang blev givet
             if (ceoLogin.AccessGranted)
             {
-                txtCEORestricted.Visibility = Visibility.Collapsed;
-                spCEOData.Visibility = Visibility.Visible;
+                // Debug: Synlighed opdateres korrekt
+                MessageBox.Show("Adgang givet. Gør CEO-sektionen synlig.", "Debug");
+
+                spCEOData.Visibility = Visibility.Visible; // Gør CEO-sektionen synlig
+                txtCEORestricted.Visibility = Visibility.Collapsed; // Skjul restriktionsbeskeden
+                btnKPI.Visibility = Visibility.Visible; // Gør KPI-knappen synlig
+            }
+            else
+            {
+                // Debug: Adgang nægtet
+                MessageBox.Show("Adgang nægtet. CEO-sektionen forbliver skjult.", "Debug");
+            }
+        }
+
+        private void btnKPI_Click(object sender, RoutedEventArgs e)
+        {
+            // Debug: Tjek om KPI-knappen fungerer
+            MessageBox.Show("KPI-knappen blev trykket. Åbner KPI-vinduet.", "Debug");
+
+            try
+            {
+                // Åbn KPI-vinduet
+                KPIWindow kpiWindow = new KPIWindow();
+                kpiWindow.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                // Debug: Hvis der opstår fejl, vis fejlbeskeden
+                MessageBox.Show($"Der opstod en fejl under åbning af KPI-vinduet:\n{ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void Banko_Click(object sender, RoutedEventArgs e)
         {
-            BankoWindow bw = new BankoWindow();
-            bw.ShowDialog();
-        }
+            // Debug: Banko-knappen fungerer
+            MessageBox.Show("Banko-knappen blev trykket.", "Debug");
 
-        private void MainMenuWindow_Closed(object sender, EventArgs e)
-        {
-            Application.Current.Shutdown();
+            // Åbn Banko-vinduet
+            BankoWindow bankoWindow = new BankoWindow();
+            bankoWindow.ShowDialog();
         }
 
         private void LogUd_Click(object sender, RoutedEventArgs e)
         {
+            // Debug: Log Ud-knappen fungerer
+            MessageBox.Show("Log Ud-knappen blev trykket. Logger ud.", "Debug");
+
             // Luk dette vindue
             this.Hide();
 
             // Opret en ny instans af MainWindow
             MainWindow newMainWindow = new MainWindow();
             newMainWindow.Show();
+        }
+
+        private void MainMenuWindow_Closed(object sender, EventArgs e)
+        {
+            // Debug: Hovedmenuen blev lukket
+            MessageBox.Show("Hovedmenuen blev lukket. Applikationen lukkes.", "Debug");
+
+            // Luk applikationen
+            Application.Current.Shutdown();
         }
     }
 }

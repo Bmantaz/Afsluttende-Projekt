@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using static Afsluttende_Projekt.DataAccess;
 
 
 namespace Afsluttende_Projekt
@@ -88,6 +89,6 @@ namespace Afsluttende_Projekt
 
 
 
-        }
-
     }
+
+}

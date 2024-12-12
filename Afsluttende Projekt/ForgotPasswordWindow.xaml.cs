@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using System.Text.RegularExpressions;
+using static Afsluttende_Projekt.DataAccess;
 
 namespace Afsluttende_Projekt
 {
@@ -101,7 +102,7 @@ namespace Afsluttende_Projekt
             bool harSmå = Regex.IsMatch(kode, @"[a-z]");
 
             return harTal && harSpecial && harStore && harSmå;
-      
+
         }
 
 

@@ -1,0 +1,36 @@
+﻿<Window x:Class="Afsluttende_Projekt.KPIWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="KPI-Analyse" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sorteringskontrol -->
+        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal" Margin="10">
+            <Button Content="Sortér Bedst til Værst" Width="150" Margin="5" Click="SortBedstTilVærst_Click"/>
+            <Button Content="Sortér Værst til Bedst" Width="150" Margin="5" Click="SortVærstTilBedst_Click"/>
+        </StackPanel>
+
+        <!-- Data Grid -->
+        <DataGrid x:Name="KPIGrid" Grid.Row="1" Grid.Column="0" Margin="10"/>
+
+        <!-- Grafer -->
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="10">
+            <TextBlock Text="Vælg Graftype" FontWeight="Bold" Margin="0,0,0,10"/>
+            <ComboBox x:Name="cmbGrafter" SelectionChanged="cmbGrafter_SelectionChanged">
+                <ComboBoxItem Content="Søjlediagram" IsSelected="True"/>
+                <ComboBoxItem Content="Linjediagram"/>
+                <ComboBoxItem Content="Cirkeldiagram"/>
+            </ComboBox>
+            <Canvas x:Name="KPIChart" Margin="10" Height="400"/>
+        </StackPanel>
+    </Grid>
+</Window>

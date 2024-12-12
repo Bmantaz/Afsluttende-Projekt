@@ -25,4 +25,4 @@
             <Button Content="Annuller" Width="60" Margin="5" Click="Cancel_Click"/>
         </StackPanel>
     </Grid>
-</Window>
+</Window> 
