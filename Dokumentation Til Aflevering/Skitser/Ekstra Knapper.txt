@@ -1,0 +1,36 @@
+Hovedmenu:::
+
+“Ekstra”
+I medarbejderkolonnen, kunne der være ekstra ting, såsom en tilmelding til firmafest el lign.
+I CEO kolonnen kunne der være en aktivitetslog over login til hovedmenuen, evt en sjov ekstra feature, at linke vores cookie clicker spil til en knap. - Disse ekstra funktioner i CEO ville kunne være beskyttet med et Password 
+
+
+
+ARRAY ELLER LISTE MED BRUGERNAVN
+
+PROMTP OM NAVN EXISTERE I ARRAY 
+
+NY LISTE ELLER ANDET ARRAY GEMME PASSWORD
+
+
+OVERWRITE FUNKTION 
+
+
+GEM TEXTFIL SOM ASSEST
+
+
+
+
+
+
+
+
+
+
+
+evt lave en opret bruger, som selv tilgår Excel arket, og opretter en A B C række 
+
+
+
+
+
