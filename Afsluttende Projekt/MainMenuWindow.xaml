@@ -68,8 +68,6 @@
                             HorizontalAlignment="Center" VerticalAlignment="Top" 
                             Margin="10"
                             Visibility="Collapsed" Click="btnKPI_Click"/>
-                    <TextBlock Text="Aktivitetslog: Seneste login kl. 9:00." FontSize="16" Margin="0,0,0,5"/>
-                    <TextBlock Text="(Cookie Clicker spillet kan indsættes her)" FontSize="14" FontStyle="Italic"/>
                 </StackPanel>
             </StackPanel>
         </Border>

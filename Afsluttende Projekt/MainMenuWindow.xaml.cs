@@ -1,92 +1,106 @@
-﻿using System;
-using System.Windows;
+﻿using System; // Giver adgang til grundlæggende funktionalitet som exceptions og eventhåndtering
+using System.Windows; // Giver adgang til WPF-funktionalitet som vinduer og kontroller
+using System.Windows.Media.Imaging; // Bruges til at indlæse og vise billeder
 
 namespace Afsluttende_Projekt
 {
     public partial class MainMenuWindow : Window
     {
-        private Bruger aktueltBruger;
+        private Bruger aktueltBruger; // Holder referencen til den bruger, der er logget ind
 
         public MainMenuWindow(Bruger bruger)
         {
-            InitializeComponent();
-            aktueltBruger = bruger;
+            InitializeComponent(); // Initialiserer komponenter defineret i XAML-filen
+            aktueltBruger = bruger; // Gemmer den aktuelle bruger
 
-            // Sæt velkomstbesked
+            // Sætter en velkomstbesked med brugerens navn og ID
             txtVelkommen.Text = $"Velkommen, {bruger.Brugernavn} (ID: {bruger.MedarbejderID})";
+
+            // Indlæser profilbilledet for den aktuelle bruger
+            IndlæsProfilbillede();
         }
 
+        // Event-handler for CEO-adgang der åbner et loginvindue for CEO-adgang.
         private void btnCEOAccess_Click(object sender, RoutedEventArgs e)
         {
-            // Åbn CEO-login vinduet
+            // Åbner CEO-login vinduet
             CEOLoginWindow ceoLogin = new CEOLoginWindow();
-            ceoLogin.ShowDialog();
+            ceoLogin.ShowDialog(); // Viser loginvinduet som en modal dialog
 
-            // Tjek om adgang blev givet
+            // Hvis adgangskoden er korrekt, bliver CEO-sektionen gjort synlig
             if (ceoLogin.AccessGranted)
             {
-                // Debug: Synlighed opdateres korrekt
-                MessageBox.Show("Adgang givet. Gør CEO-sektionen synlig.", "Debug");
-
-                spCEOData.Visibility = Visibility.Visible; // Gør CEO-sektionen synlig
-                txtCEORestricted.Visibility = Visibility.Collapsed; // Skjul restriktionsbeskeden
+                spCEOData.Visibility = Visibility.Visible; // Gør sektionen med CEO-data synlig
+                txtCEORestricted.Visibility = Visibility.Collapsed; // Skjuler restriktionsbeskeden
                 btnKPI.Visibility = Visibility.Visible; // Gør KPI-knappen synlig
-            }
-            else
-            {
-                // Debug: Adgang nægtet
-                MessageBox.Show("Adgang nægtet. CEO-sektionen forbliver skjult.", "Debug");
             }
         }
 
+        // Event-handler for KPI-knappen, åbner KPI-vinduet for at vise KPI-data.
         private void btnKPI_Click(object sender, RoutedEventArgs e)
         {
-            // Debug: Tjek om KPI-knappen fungerer
-            MessageBox.Show("KPI-knappen blev trykket. Åbner KPI-vinduet.", "Debug");
-
             try
             {
-                // Åbn KPI-vinduet
+                // Åbner KPI-vinduet
                 KPIWindow kpiWindow = new KPIWindow();
-                kpiWindow.ShowDialog();
+                kpiWindow.ShowDialog(); // Viser KPI-vinduet som en modal dialog
             }
             catch (Exception ex)
             {
-                // Debug: Hvis der opstår fejl, vis fejlbeskeden
+                // Viser en fejlbesked, hvis der opstår problemer, eksempelvis hvis filen mangler/er beskadiget/ikke kan åbnes
                 MessageBox.Show($"Der opstod en fejl under åbning af KPI-vinduet:\n{ex.Message}", "Fejl", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
+        // Event-handler for Banko-knappen der åbner et separat vindue til banko funktionen
         private void Banko_Click(object sender, RoutedEventArgs e)
         {
-            // Debug: Banko-knappen fungerer
-            MessageBox.Show("Banko-knappen blev trykket.", "Debug");
-
-            // Åbn Banko-vinduet
+            // Åbner Banko-vinduet
             BankoWindow bankoWindow = new BankoWindow();
-            bankoWindow.ShowDialog();
+            bankoWindow.ShowDialog(); // Viser Banko-vinduet som en modal dialog
         }
 
+        /* Event-handler for Log Ud-knappen
+           Her vil vi gerne sendes tilbage til vores MainWindow, så der kan logges ind på ny.
+        */
         private void LogUd_Click(object sender, RoutedEventArgs e)
         {
-            // Debug: Log Ud-knappen fungerer
-            MessageBox.Show("Log Ud-knappen blev trykket. Logger ud.", "Debug");
+            this.Hide(); // Skjuler MainMenuWindow, så det ikke lukkes (se næste eventhandler hvorfor hide og ikke close)
 
-            // Luk dette vindue
-            this.Hide();
-
-            // Opret en ny instans af MainWindow
+            // Åbner et nyt loginvindue
             MainWindow newMainWindow = new MainWindow();
-            newMainWindow.Show();
+            newMainWindow.Show(); // Viser loginvinduet
         }
 
+        // Event-handler, der aktiveres, når MainMenuWindow lukkes
         private void MainMenuWindow_Closed(object sender, EventArgs e)
         {
-            // Debug: Hovedmenuen blev lukket
-            MessageBox.Show("Hovedmenuen blev lukket. Applikationen lukkes.", "Debug");
+            Application.Current.Shutdown(); // Lukker hele applikationen
+        }
 
-            // Luk applikationen
-            Application.Current.Shutdown();
+        // Metode til at indlæse profilbilledet for den aktuelle bruger
+        private void IndlæsProfilbillede()
+        {
+            string medarbejderID = aktueltBruger.MedarbejderID; // Henter medarbejder-ID'et fra den aktuelle bruger
+            DataAccess da = new DataAccess(); // Opretter en instans af DataAccess til at hente data
+            string billedeSti = da.HentProfilbilledeSti(medarbejderID); // Henter stien til profilbilledet baseret på ID'et
+
+            // Hvis der findes et billede for brugeren
+            if (!string.IsNullOrEmpty(billedeSti))
+            {
+                profilImage.Source = new BitmapImage(new Uri(billedeSti)); // Indlæser billedet og viser det i UI
+            }
         }
     }
 }
+
+
+/*
+  Forventet funktionalitet
+  Når en bruger logger ind, vises deres navn, ID og profilbillede på hovedmenuen.
+  CEO-specifikke elementer forbliver skjulte, indtil en korrekt adgangskode indtastes.
+  Banko- og KPI-vinduer kan åbnes uden problemer.
+  Brugeren kan logge ud, hvilket bringer dem tilbage til loginvinduet.
+  Applikationen lukkes korrekt, når hovedmenuen lukkes.
+ */
+

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
 
 namespace Afsluttende_Projekt
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -22,5 +18,15 @@ namespace Afsluttende_Projekt
             loginWindow.Show(); // Viser loginvinduet ovenpå, så brugeren kan logge ind
         }
     }
-
+    
 }
+/*
+ Forventet Funktionalitet
+Ved opstart initialiseres MainWindow og dets UI-elementer fra XAML-filen.
+
+Når knappen "Medarbejder Login" trykkes, skjules hovedvinduet.
+Et nyt loginvindue (LoginWindow) åbnes for at håndtere brugerens login.
+
+Hovedvinduet fungerer som en startskærm, og brugeren navigerer til login for videre adgang.
+ */
+

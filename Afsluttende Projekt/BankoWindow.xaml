@@ -12,6 +12,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Plade 1 -->
+        <!-- DataGrid bruges til a vise data i tabelformat-->
         <DataGrid x:Name="dgPlade1"
                   Grid.Column="0"
                   IsReadOnly="True"
